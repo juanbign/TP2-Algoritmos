@@ -40,7 +40,7 @@ public:
 		return cantidadNodos;
 	}
 
-	void AgregarNodo(int datoInicial ,int posicion){
+	void AgregarNodo(TipoVariable datoInicial, int posicion){
 		//pre -
 		//pos agrega un nodo a la lista
 
@@ -82,7 +82,7 @@ public:
 		cantidadNodos--;
 	}
 
-	void ModificarDatoNodo(int dato, int posicion){
+	void ModificarDatoNodo(TipoVariable dato, int posicion){
 		//pre
 		//pos modifica el dato de un nodo de la lista
 		Nodo<TipoVariable> * punteroNodoBuscado = ObtenerNodo(posicion);
