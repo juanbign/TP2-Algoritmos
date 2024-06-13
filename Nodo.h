@@ -1,16 +1,9 @@
-/*
- * Nodo.h
- *
- *  Created on: 28 abr. 2024
- *      Author: martin
- */
-
-#include <iostream>
 #ifndef NODO_H_
 #define NODO_H_
 
-template <typename TipoVariable>
+#include <iostream>
 
+template <typename TipoVariable>
 class Nodo{
 
 	private:
