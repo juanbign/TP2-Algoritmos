@@ -43,3 +43,9 @@ void Parada::cambiarColectivo(int colectivo) {
     this->colectivo = colectivo;
     
 }
+
+Parada::~Parada() {
+
+
+
+}
