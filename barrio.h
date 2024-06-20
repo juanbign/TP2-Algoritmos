@@ -15,16 +15,16 @@ class Barrio {
 
     public:
 
-        Barrio(int longitud, std::string nombre, Parada dato_inicial) {
+        Barrio(int largo, std::string nombre, Parada dato_inicial) {
 
-            if (longitud < 1) {
+            if (largo < 1) {
 
-                //throw invalid_argument("La longitud debe ser mayor o igual a 1");
+                //throw invalid_argument("El largo debe ser mayor o igual a 1");
 
             } else {
 
                 this->nombre = nombre;
-                this->paradas = new Lista<Parada>(longitud, dato_inicial);
+                this->paradas = new Lista<Parada>;
 
             }        
 
@@ -36,43 +36,45 @@ class Barrio {
 
         }
 
-        Parada& obtenerParada(int posicion) {
+        std::string obtenerNombre() {
+
+            return this->nombre;
+
+        }
+
+        Parada obtenerParada(int posicion) {
 
             return this->paradas->obtener(posicion);
 
         }
 
-        int agregarParada(Parada dato) {
+        void agregarParada(Parada dato) {
 
-            return this->paradas->agregar(dato);
+            this->paradas->agregar(dato, this->paradas->getTamanio() + 1);
 
         }
+
         int contarParadas() {
 
-            return this->paradas->contarElementos();
+            return this->paradas->getTamanio();
 
         }
+
         bool estaVacio() {
 
-            return this->paradas->estaVacio();
+            return this->paradas->vacia();
 
         }
 
         void asignarParada(int posicion, Parada dato) {
 
-            this->paradas->asignar(posicion, dato);
+            this->paradas->cambiar(posicion, dato);
 
         }
         
         void removerParada(int posicion) {
 
             this->paradas->remover(posicion);
-
-        }
-
-        void recorrerParadas() {
-
-            this->paradas->recorrer();
 
         }
 
