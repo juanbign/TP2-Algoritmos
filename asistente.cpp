@@ -122,9 +122,9 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
 
     double* distancias = new double[listaParadas->getTamanio()];
     
-    for (int i = 1; i < listaParadas->getTamanio() + 1; i++) {
+    for (int i = 0; i < listaParadas->getTamanio(); i++) {
         
-        parada = listaParadas->obtener(i);
+        parada = listaParadas->obtener(i + 1);
         distancias[i] = sqrt(pow(parada.obtenerLatitud() - lat, 2) + pow(parada.obtenerLongitud() - lon, 2));
 
     }
@@ -136,13 +136,15 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
         desordenado = false;
 
         for (int j = 0; j < listaParadas->getTamanio() - i - 1; j++) {
+
+            cout << distancias[j] << " " << distancias[j + 1] << endl;
             
             if (distancias[j] > distancias[j + 1]) {
 
                 swap(distancias[j], distancias[j + 1]);
                 
                 parada = listaParadas->obtener(j + 1);
-                listaParadas->cambiar(listaParadas->obtener(j + 2), j);
+                listaParadas->cambiar(listaParadas->obtener(j + 2), j + 1);
                 listaParadas->cambiar(parada, j + 2);
                 
                 desordenado = true;
