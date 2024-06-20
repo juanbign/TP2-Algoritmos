@@ -1,54 +1,85 @@
+/*
+ * Nodo.h
+ *
+ *  Created on: 8 may. 2024
+ *      Author: martin
+ */
+
 #ifndef NODO_H_
 #define NODO_H_
 
 #include <iostream>
 
-template <typename TipoVariable>
-class Nodo{
+template <typename T>
+class Nodo {
+private:
+	T dato;
+	Nodo<T> * siguiente;
 
-	private:
-		TipoVariable dato;
-		Nodo * siguienteNodo;
+public:
+	/**
+	 * pre: -
+	 * pos: el Nodo resulta inicializado con el dato dado
+     *       y sin un Nodo siguiente.
+	 */
+	Nodo(T dato);
 
-	public:
+	/**
+	 * pre:
+	 * pos: elimina la memoria
+	 */
+	virtual ~Nodo(); //no hago delete
 
-		Nodo(TipoVariable datoInicial) {
-			//Pre:
-			//Pos: crea un nodo con un dato inical y con siguiente Nodo apuntando a NULL
-			dato=datoInicial;
-			siguienteNodo =NULL;
-		}
+	/**
+	 * pre:
+	 * pos: devuelve el dato del nodo
+	 */
+	T getDato();
 
-		void cambiarDato(TipoVariable nuevoDato){
-			//Pre: -
-			//Pos: cambia el dato del nodo
-			dato = nuevoDato;
-		}
+	/**
+	 * pre:
+	 * pos: cambia el dato del nodo
+	 */
+	void setDato(T dato);
 
-		void cambiarSiguiente(Nodo* nuevoSiguiente){
-		//Pre: -
-		//Pos: cambia la direccion del puntero siguienteNodo
+	/**
+	 * pre:
+	 * pos: devuelve el siguiente nodo
+	 */
+	Nodo<T>* getSiguiente();
 
-			siguienteNodo = nuevoSiguiente;
-		}
-
-		TipoVariable obtenerDato(){
-			//Pre: -
-			//Pos: devuelve el dato que se halla dentro del nodo
-			return dato;
-		}
-
-		Nodo* obtenerSiguiente(){
-			//Pre: _
-			//Pos: devuelve el valor de siguenteNodo
-			return siguienteNodo;
-		}
-
-		~Nodo() {
-			// TODO Auto-generated destructor stub
-
-		}
-
+	/**
+	 * pre:
+	 * pos: cambia el nodo siguiente
+	 */
+	void setSiguiente(Nodo<T>* siguiente);
 };
+
+template <typename T> Nodo<T>::Nodo(T dato) {
+	this->dato = dato;
+	this->siguiente = NULL;
+}
+
+template <typename T> Nodo<T>::~Nodo() {}
+
+
+template <typename T> T Nodo<T>::getDato() {
+	return this->dato;
+}
+
+template <typename T> void Nodo<T>::setDato(T dato) {
+	this->dato = dato;
+}
+
+template <typename T> Nodo<T>* Nodo<T>::getSiguiente() {
+	return this->siguiente;
+}
+
+template <typename T> void Nodo<T>::setSiguiente(Nodo<T>* siguiente) {
+	this->siguiente = siguiente;
+}
+
+
+
 
 #endif /* NODO_H_ */
