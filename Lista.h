@@ -1,10 +1,3 @@
-/*
- * Lista.h
- *
- *  Created on: 8 may. 2024
- *      Author: martin
- */
-
 #ifndef LISTA_H_
 #define LISTA_H_
 
@@ -14,8 +7,9 @@ template <typename T>
 class Lista {
 
 private:
+
 	Nodo<T> * primero;
-	unsigned int tamanio;
+	int tamanio;
 	Nodo<T>* cursor;
 
 public:
@@ -41,7 +35,7 @@ public:
     /*
 	 * post: devuelve la cantidad de elementos que tiene la Lista.
 	 */
-	unsigned int getTamanio();
+	int getTamanio();
 
 	/**
 	 * pre: -
@@ -56,25 +50,25 @@ public:
 	 * pre: posición pertenece al intervalo: [1, contarElementos() + 1]
 	 * pos: agrega el elemento en la posición indicada.
 	 */
-	void agregar(T elemento, unsigned int posicion);
+	void agregar(T elemento, int posicion);
 
     /*
      * pre : posición pertenece al intervalo: [1, contarElementos()]
      * post: remueve de la Lista el elemento en la posición indicada.
      */
-	void remover(unsigned int posicion);
+	void remover(int posicion);
 
 	/**
 	 * pre : posición pertenece al intervalo: [1, contarElementos()]
 	 * pos: devuelve el dato de la posicion
 	 */
-	T obtener(unsigned int posicion);
+	T obtener(int posicion);
 
 	/**
 	 * pre : posición pertenece al intervalo: [1, contarElementos()]
 	 * pos: cambia el elemento de la posicion
 	 */
-	void cambiar(T elemento, unsigned int posicion);
+	void cambiar(T elemento, int posicion);
 
     /*
 	 * post: deja el cursor de la Lista preparado para hacer un nuevo
@@ -108,9 +102,9 @@ private:
      * pre : posición pertenece al intervalo: [1, contarElementos()]
      * post: devuelve el nodo en la posición indicada.
      */
-	Nodo<T> * obtenerNodo(unsigned int posicion);
+	Nodo<T> * obtenerNodo(int posicion);
 
-	void validarPosicion(unsigned int posicion);
+	void validarPosicion(int posicion);
 };
 
 
@@ -133,7 +127,7 @@ template <typename T> bool Lista<T>::estaVacia() {
 	return (this->tamanio == 0);
 }
 
-template <typename T> unsigned int Lista<T>::getTamanio() {
+template <typename T> int Lista<T>::getTamanio() {
 	return this->tamanio;
 }
 
@@ -145,7 +139,7 @@ template <typename T> void Lista<T>::agregarAlInicio(T elemento) {
 	this->agregar(elemento, 1);
 }
 
-template <typename T> void Lista<T>::agregar(T elemento, unsigned int posicion) {
+template <typename T> void Lista<T>::agregar(T elemento, int posicion) {
 	validarPosicion(posicion);
     Nodo<T> * nuevo = new Nodo<T>(elemento);
     if (posicion == 1) {
@@ -159,23 +153,23 @@ template <typename T> void Lista<T>::agregar(T elemento, unsigned int posicion) 
     this->tamanio++;
 }
 
-template <typename T> Nodo<T> * Lista<T>::obtenerNodo(unsigned int posicion) {
+template <typename T> Nodo<T> * Lista<T>::obtenerNodo(int posicion) {
 	//validarPosicion(posicion);
 	Nodo<T> * actual = this->primero;
-	for(unsigned int i = 1; i < posicion; i++) {
+	for(int i = 1; i < posicion; i++) {
 		actual = actual->getSiguiente();
 	}
 	return actual;
 }
 
-template <typename T> void Lista<T>::validarPosicion(unsigned int posicion) {
+template <typename T> void Lista<T>::validarPosicion(int posicion) {
     if ((posicion < 1) ||
     	(posicion > this->tamanio + 1)) {
     	throw "La posicion debe estar entre 1 y tamaño + 1";
     }
 }
 
-template <typename T> void Lista<T>::remover(unsigned int posicion) {
+template <typename T> void Lista<T>::remover(int posicion) {
 	validarPosicion(posicion);
 	Nodo<T> * removido;
 	if (posicion == 1) {
@@ -190,12 +184,12 @@ template <typename T> void Lista<T>::remover(unsigned int posicion) {
 	this->tamanio--;
 }
 
-template <typename T> T Lista<T>::obtener(unsigned int posicion) {
+template <typename T> T Lista<T>::obtener(int posicion) {
 	validarPosicion(posicion);
 	return this->obtenerNodo(posicion)->getDato();
 }
 
-template <typename T> void Lista<T>::cambiar(T elemento, unsigned int posicion) {
+template <typename T> void Lista<T>::cambiar(T elemento, int posicion) {
 	validarPosicion(posicion);
 	this->obtenerNodo(posicion)->setDato(elemento);
 }
