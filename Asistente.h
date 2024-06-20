@@ -9,7 +9,7 @@ class Asistente{
 
     private:
 
-        const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
+        static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
     public:
 
@@ -17,7 +17,12 @@ class Asistente{
  * Primera aproximación, falta pruebas
  ******************************************************************************************************************/
 
-	
+    /**
+    * pre: 
+    * post: Devuelve el numero mas grande que un colectivo puede tener 
+    */
+    int obtenerMaximoNumeroColectivo();
+
    /**
     * pre: 
     * post: Devuelve una lista de las paradas de una linea de colectivo en todos los barrios 
