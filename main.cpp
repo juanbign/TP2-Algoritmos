@@ -2,8 +2,6 @@
 #include "parada.h"
 #include "barrio.h"
 #include "asistente.h"
-#include <iostream>
-#include <fstream>
 
 using namespace std;
 
@@ -19,7 +17,7 @@ int main (int argc, char** argv) {
     Barrio<Parada> barrio = Barrio<Parada>(2, "Villa Urquiza", parada);
     barrio.agregarParada(paradas->obtener(1));
     barrio.agregarParada(paradas->obtener(2));
-    asistente.mostrarParadasOrdenadasPorDistancia(barrio, 71, -34, -58);
+    asistente.obtenerParadasOrdenadasPorDistancia(barrio, 71, -34, -58);
 
 
 }
