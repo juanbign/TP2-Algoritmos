@@ -22,6 +22,15 @@ Parada::Parada(string direccion, int colectivo, double lat, double lon) {
 
 }
 
+Parada::Parada() {
+
+    this->direccion = "";
+    this->colectivo = 1;
+    this->lat = 0;
+    this->lon = 0;
+
+}
+
 string Parada::obtenerDireccion() {
 
     return this->direccion;

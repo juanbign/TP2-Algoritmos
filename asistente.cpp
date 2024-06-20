@@ -16,13 +16,14 @@ int Asistente::obtenerMaximoNumeroColectivo() {
 Lista<Parada>* Asistente::obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barrios, int colectivo) {
 		
     Lista<Parada>* paradasPorLinea = new Lista<Parada>;
+    barrios->iniciarCursor();
 
     // Obtengo el primer barrio para no tener que crear una lista de Paradas solo para inicializar
-    Barrio<Parada> barrio = barrios->obtener(1);
-    
-    for (int i = 1; i < barrios->getTamanio() + 1; i++) {
+    Barrio<Parada> barrio = Barrio<Parada>("");
 
-        barrio = barrios->obtener(i);
+    while (barrios->avanzarCursor()) {
+
+        barrio = barrios->obtenerCursor();
 
         for (int j = 1; j < barrio.contarParadas(); j++) {
 
@@ -71,14 +72,15 @@ Parada Asistente::obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, doubl
     Parada min_parada = Parada("placeholder", 1, 0, 0);
     Parada nueva_parada = Parada("placeholder", 1, 0, 0);
     
-    // Obtengo el primer barrio para no tener que crear una lista de Paradas solo para inicializar
-    Barrio<Parada> barrio = barrios->obtener(1);
+    barrios->iniciarCursor();
 
-    for (int i = 1; i < barrios->getTamanio() + 1; i++) {
+    Barrio<Parada> barrio = Barrio<Parada>("");
 
-        barrio = barrios->obtener(i);
+    while (barrios->avanzarCursor()) {
 
-        for (int j = 1; j < barrios->obtener(i).contarParadas() + 1; j++) {
+        barrio = barrios->obtenerCursor();
+
+        for (int j = 1; j < barrio.contarParadas() + 1; j++) {
 
             nueva_parada = barrio.obtenerParada(j);
             
@@ -105,7 +107,7 @@ Parada Asistente::obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, doubl
 Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> barrio, int colectivo, double lat, double lon) {
 
     Lista<Parada>* listaParadas = new Lista<Parada>;
-    Parada parada = Parada("placeholder", 1, 0, 0);
+    Parada parada = Parada("", 1, 0, 0);
 
     for (int i = 1; i < barrio.contarParadas() + 1; i++) {
 
@@ -121,23 +123,25 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
     }
 
     double* distancias = new double[listaParadas->getTamanio()];
+
+    listaParadas->iniciarCursor();
     
     for (int i = 0; i < listaParadas->getTamanio(); i++) {
         
-        parada = listaParadas->obtener(i + 1);
+        listaParadas->avanzarCursor();
+
+        parada = listaParadas->obtenerCursor();
         distancias[i] = sqrt(pow(parada.obtenerLatitud() - lat, 2) + pow(parada.obtenerLongitud() - lon, 2));
 
     }
 
-    bool desordenado = false; 
+    bool desordenado = false;
 
     for (int i = 0; i < listaParadas->getTamanio() - 1; i++) {
         
         desordenado = false;
 
         for (int j = 0; j < listaParadas->getTamanio() - i - 1; j++) {
-
-            cout << distancias[j] << " " << distancias[j + 1] << endl;
             
             if (distancias[j] > distancias[j + 1]) {
 

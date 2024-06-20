@@ -14,7 +14,7 @@ int main (int argc, char** argv) {
     paradas->agregar(parada, paradas->getTamanio() + 1);
     parada = Parada("Diaz Colodrero 3495", 71, -34.56382815931894, -58.49316661007587);
     paradas->agregar(parada, paradas->getTamanio() + 1);
-    Barrio<Parada> barrio = Barrio<Parada>(2, "Villa Urquiza", parada);
+    Barrio<Parada> barrio = Barrio<Parada>("Villa Urquiza");
     barrio.agregarParada(paradas->obtener(1));
     barrio.agregarParada(paradas->obtener(2));
     paradas = asistente.obtenerParadasOrdenadasPorDistancia(barrio, 71, -34, -58);

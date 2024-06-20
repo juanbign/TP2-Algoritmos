@@ -15,19 +15,17 @@ class Barrio {
 
     public:
 
-        Barrio(int largo, std::string nombre, Parada dato_inicial) {
+        Barrio(std::string nombre) {
 
-            if (largo < 1) {
+            this->nombre = nombre;
+            this->paradas = new Lista<Parada>;   
 
-                //throw invalid_argument("El largo debe ser mayor o igual a 1");
+        }
 
-            } else {
+        Barrio() {
 
-                this->nombre = nombre;
-                this->paradas = new Lista<Parada>;
-
-            }        
-
+            this->nombre = "";
+            this->paradas = new Lista<Parada>;
         }
 
         virtual ~Barrio() {

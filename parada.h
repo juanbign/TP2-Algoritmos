@@ -14,7 +14,7 @@ private:
 public:
 
     Parada(std::string direccion, int colectivo, double lat, double lon);
-    Parada() : direccion(""), colectivo(0), lat(0.0), lon(0.0) {}
+    Parada();
     std::string obtenerDireccion();
     int obtenerColectivo();
     double obtenerLatitud();
