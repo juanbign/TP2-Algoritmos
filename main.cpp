@@ -17,7 +17,9 @@ int main (int argc, char** argv) {
     Barrio<Parada> barrio = Barrio<Parada>(2, "Villa Urquiza", parada);
     barrio.agregarParada(paradas->obtener(1));
     barrio.agregarParada(paradas->obtener(2));
-    asistente.obtenerParadasOrdenadasPorDistancia(barrio, 71, -34, -58);
+    paradas = asistente.obtenerParadasOrdenadasPorDistancia(barrio, 71, -34, -58);
 
+    cout << paradas->obtener(1).obtenerDireccion() << endl;
+    cout << paradas->obtener(2).obtenerDireccion();
 
 }
