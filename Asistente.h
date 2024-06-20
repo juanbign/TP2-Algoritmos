@@ -11,6 +11,9 @@
 
 class Asistente{
 
+    private:
+
+        const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
     public:
 
@@ -18,48 +21,12 @@ class Asistente{
  * Primera aproximación, falta pruebas
  ******************************************************************************************************************/
 
-	/**
-	 * pre:
-	 * post: Devuelve una lista de todas las paradas de una linea de colectivo en un barrio 
-	 */
-
-	Lista<Parada>* obtenerParadasPorColectivoYBarrio(Lista<Barrio<Parada> >* barrios, int colectivo, std::string nombreBarrio){
-
-		Lista<Parada>* paradasPorLinea = new Lista<Parada>;
-        Barrio<Parada> barrio = barrios->obtener(1);
-		
-        for (int i = 1; i < barrios->getTamanio() + 1; i++) {
-
-            barrio = barrios->obtener(i);
-
-            if (barrio.obtenerNombre() != nombreBarrio) {
-
-                continue;
-
-            }
-
-            for (int j = 1; j < barrio.contarParadas(); j++) {
-
-                if (barrio.obtenerParada(j).obtenerColectivo() == colectivo) {
-
-                    paradasPorLinea->agregar(barrio.obtenerParada(j), paradasPorLinea->getTamanio() + 1);
-
-                }
-
-            }
-
-            break;
-
-        }
-		
-		return paradasPorLinea;
-
-	}
+	
    /**
     * pre: 
-    * post: Devuelve una lista de todas las paradas de una linea de colectivo en todos los barrios 
+    * post: Devuelve una lista de las paradas de una linea de colectivo en todos los barrios 
     */
-	Lista<Parada>* obtenerParadasPorColectivo(Lista<Barrio<Parada> >* barrios, int colectivo) {
+	Lista<Parada>* obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barrios, int colectivo) {
 		
 		Lista<Parada>* paradasPorLinea = new Lista<Parada>;
         Barrio<Parada> barrio = barrios->obtener(1);
@@ -84,21 +51,29 @@ class Asistente{
 
 	}
 
-	/**
-	 * pre
-	 * post: devuelve la cantidad de paradas de una determinada linea de colectivos de todos los barrios
-	 * de la ciudad
-	 */
+    /**
+    * pre: 
+    * post: Devuelve una lista de la cantidad de paradas de todos los colectivos en todos los barrios 
+    */
+    Lista<int>* obtenerCantidadParadasPorColectivo(Lista<Barrio<Parada> >* barrios) {
 
-	int cantidadParadasPorLinea(Lista<Barrio<Parada> >* barrios, int colectivo) {
+        Lista<int>* colectivos = new Lista<int>;
 
-		Lista<Parada>* paradasPorLinea = obtenerParadasPorColectivo(barrios, colectivo);
+        for (int i = 1; i < MAXIMO_NUM_LINEA_COLECTIVO + 1; i++) {
 
-		return paradasPorLinea->getTamanio();
-	
+            colectivos->agregar(obtenerParadasDeColectivo(barrios, i)->getTamanio(), i);
+
+        }
+
+        return colectivos;
+
     }
 
-    Parada paradaMasCercana(Lista<Barrio<Parada> >* barrios, double lat, double lon) {
+    /**
+    * pre: 
+    * post: Devuelve la parada más cercana a una coordenada  
+    */
+    Parada obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, double lat, double lon) {
 
         double distancia = std::numeric_limits<double>::max();
         double nueva_distancia;
@@ -130,7 +105,11 @@ class Asistente{
 
     }
 
-    void mostrarParadasOrdenadasPorDistancia(Barrio<Parada> barrio, int colectivo, double lat, double lon) {
+    /**
+    * pre: 
+    * post: Devuelve una lista de todas las paradas en todos los barrios, ordenadas por distancia de una coordenada 
+    */
+    Lista<Parada>* obtenerParadasOrdenadasPorDistancia(Barrio<Parada> barrio, int colectivo, double lat, double lon) {
 
         Lista<Parada>* listaParadas = new Lista<Parada>;
         Parada parada = Parada("placeholder", 1, 0, 0);
@@ -186,13 +165,7 @@ class Asistente{
 
         }
 
-        std::cout << listaParadas->obtener(1).obtenerDireccion(); 
-
-        for (int i = 2; i < listaParadas->getTamanio() + 1; i++) {
-
-            std::cout << "; " << listaParadas->obtener(i).obtenerDireccion();
-
-        }
+        return listaParadas;
 
     }
 
