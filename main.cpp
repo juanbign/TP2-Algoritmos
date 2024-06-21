@@ -23,10 +23,10 @@ int main (int argc, char** argv) {
     cout << paradas->obtener(2).obtenerDireccion() << endl;;
     Lista<Barrio>* barrios = new Lista<Barrio>;
     barrios->agregar(barrio);
-    cout << "a";
+    cout << "b";
     cout << barrios->obtener(1).obtenerNombre();
     cout << asistente.obtenerCantidadParadasPorColectivo(barrios)->obtener(1)  << endl;
     
     delete paradas;
 
-}
+} 

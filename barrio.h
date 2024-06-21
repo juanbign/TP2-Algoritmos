@@ -2,7 +2,7 @@
 #define BARRIO_H_
 
 #include "parada.h"
-#include "Lista.h"
+#include "lista.h"
 #include <string>
 
 class Barrio {
@@ -63,7 +63,7 @@ class Barrio {
 
         }
 
-        void asignarParada(int posicion, Parada dato) {
+        void asignarParada(Parada dato, int posicion) {
 
             this->paradas->cambiar(dato, posicion);
 
