@@ -60,7 +60,7 @@ class Barrio {
 
         bool estaVacio() {
 
-            return this->paradas->vacia();
+            return this->paradas->estaVacia();
 
         }
 

@@ -7,10 +7,6 @@
 
 class Asistente{
 
-    private:
-
-        static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
-
     public:
 
 /******************************************************************************************************************

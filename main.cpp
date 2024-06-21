@@ -2,6 +2,7 @@
 #include "parada.h"
 #include "barrio.h"
 #include "asistente.h"
+#include "lectura.h"
 
 using namespace std;
 
@@ -18,8 +19,15 @@ int main (int argc, char** argv) {
     barrio.agregarParada(paradas->obtener(1));
     barrio.agregarParada(paradas->obtener(2));
     paradas = asistente.obtenerParadasOrdenadasPorDistancia(barrio, 71, -34, -58);
-
     cout << paradas->obtener(1).obtenerDireccion() << endl;
-    cout << paradas->obtener(2).obtenerDireccion();
+    cout << paradas->obtener(2).obtenerDireccion() << endl;;
+    Lista<Barrio<Parada> >* barrios = new Lista<Barrio<Parada> >;
+    barrios->agregar(barrio);
+    cout << "a";
+    cout << barrios->obtener(1).obtenerNombre();
+    cout << asistente.obtenerCantidadParadasPorColectivo(barrios)->obtener(1)  << endl;
+
+
+    delete paradas;
 
 }

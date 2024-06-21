@@ -7,11 +7,7 @@
 
 using namespace std;
 
-int Asistente::obtenerMaximoNumeroColectivo() {
-
-    return this->MAXIMO_NUM_LINEA_COLECTIVO;
-
-}
+static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
 Lista<Parada>* Asistente::obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barrios, int colectivo) {
 		
@@ -164,6 +160,8 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
         }
 
     }
+
+    delete[] distancias;
 
     return listaParadas;
 
