@@ -9,13 +9,13 @@ using namespace std;
 
 static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
-Lista<Parada>* Asistente::obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barrios, int colectivo) {
+Lista<Parada>* Asistente::obtenerParadasDeColectivo(Lista<Barrio>* barrios, int colectivo) {
 		
     Lista<Parada>* paradasPorLinea = new Lista<Parada>;
     barrios->iniciarCursor();
 
     // Obtengo el primer barrio para no tener que crear una lista de Paradas solo para inicializar
-    Barrio<Parada> barrio = Barrio<Parada>("");
+    Barrio barrio = Barrio("");
 
     while (barrios->avanzarCursor()) {
 
@@ -39,7 +39,7 @@ Lista<Parada>* Asistente::obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barr
 
 }
 
-Lista<int>* Asistente::obtenerCantidadParadasPorColectivo(Lista<Barrio<Parada> >* barrios) {
+Lista<int>* Asistente::obtenerCantidadParadasPorColectivo(Lista<Barrio>* barrios) {
 
     Lista<int>* colectivos = new Lista<int>;
 
@@ -60,7 +60,7 @@ Lista<int>* Asistente::obtenerCantidadParadasPorColectivo(Lista<Barrio<Parada> >
 * pre: 
 * post: Devuelve la parada más cercana a una coordenada  
 */
-Parada Asistente::obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, double lat, double lon) {
+Parada Asistente::obtenerParadaMasCercana(Lista<Barrio>* barrios, double lat, double lon) {
 
     // Numero máximo del tipo "double"
     double min_distancia = numeric_limits<double>::max();
@@ -70,7 +70,7 @@ Parada Asistente::obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, doubl
     
     barrios->iniciarCursor();
 
-    Barrio<Parada> barrio = Barrio<Parada>("");
+    Barrio barrio = Barrio("");
 
     while (barrios->avanzarCursor()) {
 
@@ -100,7 +100,7 @@ Parada Asistente::obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, doubl
     
 }
 
-Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> barrio, int colectivo, double lat, double lon) {
+Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio barrio, int colectivo, double lat, double lon) {
 
     Lista<Parada>* listaParadas = new Lista<Parada>;
     Parada parada = Parada("", 1, 0, 0);
@@ -109,7 +109,7 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
 
         parada = barrio.obtenerParada(i);
         
-        // Si el colectivo es igual al pasado por pará metro
+        // Si el colectivo es igual al pasado por parámetro
         if (parada.obtenerColectivo() == colectivo) { 
         
             listaParadas->agregar(parada, listaParadas->getTamanio() + 1);
@@ -118,6 +118,7 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
 
     }
 
+    // Creo un array para guardar las distancias de la parada
     double* distancias = new double[listaParadas->getTamanio()];
 
     listaParadas->iniciarCursor();
@@ -127,22 +128,28 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
         listaParadas->avanzarCursor();
 
         parada = listaParadas->obtenerCursor();
+
+        // Calculo la distancia con pitágoras
         distancias[i] = sqrt(pow(parada.obtenerLatitud() - lat, 2) + pow(parada.obtenerLongitud() - lon, 2));
 
     }
 
     bool desordenado = false;
 
+    // Ordeno usando ordenamiento burbuja
     for (int i = 0; i < listaParadas->getTamanio() - 1; i++) {
         
         desordenado = false;
 
         for (int j = 0; j < listaParadas->getTamanio() - i - 1; j++) {
             
+            // Si las dos posiciones están desordenadas
             if (distancias[j] > distancias[j + 1]) {
 
+                // Uso la función swap para intercambiar las posiciones del array
                 swap(distancias[j], distancias[j + 1]);
                 
+                // Uso un variable temporal para intercambiar las paradas
                 parada = listaParadas->obtener(j + 1);
                 listaParadas->cambiar(listaParadas->obtener(j + 2), j + 1);
                 listaParadas->cambiar(parada, j + 2);
@@ -153,8 +160,10 @@ Lista<Parada>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio<Parada> bar
 
         }
 
+        // Si no se ordenó ninguna posición de la lista
         if (!desordenado) {
-        
+            
+            //Salgo del bucle
             break;
         
         }

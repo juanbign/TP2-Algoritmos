@@ -23,25 +23,25 @@ class Asistente{
     * pre: 
     * post: Devuelve una lista de las paradas de una linea de colectivo en todos los barrios 
     */
-	Lista<Parada>* obtenerParadasDeColectivo(Lista<Barrio<Parada> >* barrios, int colectivo);
+	Lista<Parada>* obtenerParadasDeColectivo(Lista<Barrio>* barrios, int colectivo);
 
     /**
     * pre: 
     * post: Devuelve una lista de la cantidad de paradas de todos los colectivos en todos los barrios 
     */
-    Lista<int>* obtenerCantidadParadasPorColectivo(Lista<Barrio<Parada> >* barrios);
+    Lista<int>* obtenerCantidadParadasPorColectivo(Lista<Barrio>* barrios);
 
     /**
     * pre: 
     * post: Devuelve la parada más cercana a una coordenada  
     */
-    Parada obtenerParadaMasCercana(Lista<Barrio<Parada> >* barrios, double lat, double lon);
+    Parada obtenerParadaMasCercana(Lista<Barrio>* barrios, double lat, double lon);
 
     /**
     * pre: 
     * post: Devuelve una lista de todas las paradas en todos los barrios, ordenadas por distancia de una coordenada 
     */
-    Lista<Parada>* obtenerParadasOrdenadasPorDistancia(Barrio<Parada> barrio, int colectivo, double lat, double lon);
+    Lista<Parada>* obtenerParadasOrdenadasPorDistancia(Barrio barrio, int colectivo, double lat, double lon);
 
 };
 /*******************************************************************************************************************

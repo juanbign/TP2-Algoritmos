@@ -5,7 +5,6 @@
 #include "Lista.h"
 #include <string>
 
-template <typename Parada>
 class Barrio {
     
     private:
@@ -66,7 +65,7 @@ class Barrio {
 
         void asignarParada(int posicion, Parada dato) {
 
-            this->paradas->cambiar(posicion, dato);
+            this->paradas->cambiar(dato, posicion);
 
         }
         
