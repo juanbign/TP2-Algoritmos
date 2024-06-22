@@ -7,6 +7,23 @@
 
 static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
+Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) {
+
+    Lista<int>* cantidadParadasPorBarrio = new Lista<int>;
+
+    barrios->iniciarCursor();
+
+    while (barrios->avanzarCursor()) {
+        
+        cantidadParadasPorBarrio->agregar(barrios->obtenerCursor()->contarParadas());
+
+    }
+
+
+    return cantidadParadasPorBarrio;
+
+}
+
 Lista<Parada*>* Asistente::obtenerParadasDeColectivo(Lista<Barrio*>* barrios, int colectivo) {
 		
     Lista<Parada*>* paradasPorLinea = new Lista<Parada*>;
@@ -62,12 +79,12 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
     // Numero máximo del tipo "long double"
     long double minDistancia = std::numeric_limits<long double>::max();
     long double nuevaDistancia;
-    Parada* minParada = new Parada();
-    Parada* nuevaParada = new Parada();
+    Parada* minParada;
+    Parada* nuevaParada;
     
     barrios->iniciarCursor();
 
-    Barrio* barrio = new Barrio();
+    Barrio* barrio;
 
     while (barrios->avanzarCursor()) {
 
@@ -94,9 +111,6 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
 
     }
 
-    delete nuevaParada;
-    delete barrio;
-
     return minParada;
     
 }
@@ -104,7 +118,7 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
 Lista<Parada*>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio* barrio, int colectivo, long double lat, long double lon) {
 
     Lista<Parada*>* listaParadas = new Lista<Parada*>;
-    Parada* parada = new Parada();
+    Parada* parada;
 
     for (int i = 1; i < barrio->contarParadas() + 1; i++) {
 
@@ -172,8 +186,7 @@ Lista<Parada*>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio* barrio, i
     }
 
     delete[] distancias;
-    delete parada;
-
+    
     return listaParadas;
 
 }

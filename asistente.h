@@ -13,9 +13,15 @@ class Asistente{
  * Primera aproximación, falta pruebas
  ******************************************************************************************************************/
 
+    /**
+    * pre: 
+    * post: Devuelve una lista de la cantidad de paradas de colectivo en todos los barrios
+    */
+	Lista<int>* obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios);
+
    /**
     * pre: 
-    * post: Devuelve una lista de las paradas de una linea de colectivo en todos los barrios 
+    * post: Devuelve una lista de las paradas de un colectivo en todos los barrios 
     */
 	Lista<Parada*>* obtenerParadasDeColectivo(Lista<Barrio*>* barrios, int colectivo);
 

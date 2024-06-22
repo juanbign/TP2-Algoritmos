@@ -12,6 +12,7 @@ Menu::Menu(Lista<Barrio*>* barriosArchivo) {
 
     this->nombreBarrios = new Lista<std::string>;
     this->barriosArchivo = barriosArchivo;
+    this->asistente = new Asistente();
 
     this->barriosArchivo->iniciarCursor();
 
@@ -37,12 +38,6 @@ Menu::Menu(Lista<Barrio*>* barriosArchivo) {
 Menu::~Menu() {
 
     delete this->asistente;
-    delete this->barriosArchivo;
-    delete this->parada;
-    delete this->barrio;
-    delete this->paradas;
-    delete this->barrios;
-    delete this->cantidadParadas;
     delete this->nombreBarrios;
 
 }
@@ -57,11 +52,14 @@ void Menu::mostrarMenu() {
     long double lon;
     bool barrioEncontrado;
     std::string nombreBarrio;
+    Parada* parada;
+    Barrio* barrio;
+    Lista<Parada*>* paradas;
+    Lista<int>* cantidadParadas;
 
     while (continuar) {
 
-        std::cout << std::endl << "Bievenido! Estas son las opciones disponibles" << std::endl << std::endl;
-        std::cout << "0: Mostrar las opciones de vuelta" << std::endl;
+        std::cout << std::endl << "Bienvenido! Estas son las opciones disponibles" << std::endl << std::endl;
         std::cout << "1: Mostrar listado de cantidad de paradas por barrio" << std::endl;
         std::cout << "2: Mostrar la parada mas cercana a una coordenada" << std::endl;
         std::cout << "3: Mostrar listado de paradas de un colectivo" << std::endl;
@@ -76,36 +74,22 @@ void Menu::mostrarMenu() {
 
         switch (opcion) {
 
-            case '0':
-
-                std::cout << "0: Mostrar las opciones de vuelta" << std::endl;
-                std::cout << "1: Mostrar listado de cantidad de paradas por barrio" << std::endl;
-                std::cout << "2: Mostrar la parada mas cercana a una coordenada" << std::endl;
-                std::cout << "3: Mostrar listado de paradas de un colectivo" << std::endl;
-                std::cout << "4: Mostrar listado de cantidad de paradas por colectivo" << std::endl;
-                std::cout << "5: Mostrar listado de paradas en un barrio ordenadas por distancia de una coordenada" << std::endl << std::endl;
-
-                std::cout << "Elija una opcion: ";
-
-                std::cin >> opcion;
-
-                std::cout << std::endl << std::endl;
-
             case '1': 
                 
-                //this->cantidadParadasPorBarrio = this->asistente->obtenerCantidadParadasPorBarrio(barrios);
+                cantidadParadas = this->asistente->obtenerCantidadParadasPorBarrio(barriosArchivo);
 
-                this->barrios->iniciarCursor();
+                this->nombreBarrios->iniciarCursor();
+                cantidadParadas->iniciarCursor();
 
-                while (barrios->avanzarCursor()) {
+                while (this->nombreBarrios->avanzarCursor() && cantidadParadas->avanzarCursor()) {
 
-                    this->barrio = this->barrios->obtenerCursor();
-
-                    std::cout << this->barrio->obtenerNombre() << ": " << this->barrio->contarParadas() << " paradas" << std::endl;
+                    std::cout << this->nombreBarrios->obtenerCursor() << ": " << cantidadParadas->obtenerCursor() << " paradas" << std::endl;
 
                 }
 
                 std::cout << std::endl << std::endl;
+
+                delete cantidadParadas;
 
                 break;
 
@@ -115,11 +99,13 @@ void Menu::mostrarMenu() {
                 std::cin >> lat;
                 std::cout << std::endl << "Ingrese longitud (escrita como 1.23 o -1.23): ";
                 std::cin >> lon;
-                this->parada = this->asistente->obtenerParadaMasCercana(barriosArchivo, lat, lon);
+                parada = this->asistente->obtenerParadaMasCercana(barriosArchivo, lat, lon);
                 
-                std::cout << std::endl << std::endl << "La parada mas cercana esta en " << this->parada->obtenerDireccion() << ", a " << sqrt(pow(this->parada->obtenerLatitud() - lat, 2) + pow(this->parada->obtenerLongitud() - lon, 2)) << " grados de distancia";
+                std::cout << std::endl << std::endl << "La parada mas cercana esta en " << parada->obtenerDireccion() << ", a " << sqrt(pow(parada->obtenerLatitud() - lat, 2) + pow(parada->obtenerLongitud() - lon, 2)) << " grados de distancia";
 
                 std::cout << std::endl << std::endl;
+
+                delete parada;
 
                 break;
 
@@ -128,19 +114,19 @@ void Menu::mostrarMenu() {
                 std::cout << "Ingrese numero del colectivo: ";
                 std::cin >> colectivo;
 
-                this->paradas = this->asistente->obtenerParadasDeColectivo(this->barriosArchivo, colectivo);
+                paradas = this->asistente->obtenerParadasDeColectivo(barriosArchivo, colectivo);
 
-                this->paradas->iniciarCursor();
+                paradas->iniciarCursor();
 
                 std::cout << std::endl << std::endl;
 
-                if (this->paradas->avanzarCursor()) {
+                if (paradas->avanzarCursor()) {
 
-                    std::cout << '"' << this->paradas->obtenerCursor()->obtenerDireccion() << '"';
+                    std::cout << '"' << paradas->obtenerCursor()->obtenerDireccion() << '"';
 
-                    while (this->paradas->avanzarCursor()) {
+                    while (paradas->avanzarCursor()) {
                  
-                        std::cout << ", " << '"' << this->paradas->obtenerCursor()->obtenerDireccion() << '"';
+                        std::cout << ", " << '"' << paradas->obtenerCursor()->obtenerDireccion() << '"';
 
                     }
                 
@@ -152,25 +138,27 @@ void Menu::mostrarMenu() {
 
                 std::cout << std::endl << std::endl;
 
+                delete paradas;
+
                 break;
 
             case '4':
 
-                this->cantidadParadas = this->asistente->obtenerCantidadParadasPorColectivo(this->barriosArchivo);
+                cantidadParadas = this->asistente->obtenerCantidadParadasPorColectivo(barriosArchivo);
 
-                this->cantidadParadas->iniciarCursor();
+                cantidadParadas->iniciarCursor();
 
                 i = 1;
 
-                if (this->cantidadParadas->avanzarCursor()) {
+                if (cantidadParadas->avanzarCursor()) {
 
-                    std::cout << "Colectivo " << i << ": " << this->cantidadParadas->obtenerCursor() << " paradas";
+                    std::cout << "Colectivo " << i << ": " << cantidadParadas->obtenerCursor() << " paradas";
 
-                    while (this->cantidadParadas->avanzarCursor()) {
+                    while (cantidadParadas->avanzarCursor()) {
 
                         i++;
                  
-                        std::cout << std::endl << "Colectivo " << i << ": " << this->cantidadParadas->obtenerCursor() << " paradas";
+                        std::cout << std::endl << "Colectivo " << i << ": " << cantidadParadas->obtenerCursor() << " paradas";
 
                     }
                 
@@ -181,7 +169,9 @@ void Menu::mostrarMenu() {
                 }
 
                 std::cout << std::endl << std::endl;
-                
+
+                delete cantidadParadas;
+
                 break;
 
             case '5':
@@ -206,13 +196,13 @@ void Menu::mostrarMenu() {
                     std::getline(std::cin, nombreBarrio);
 
                     this->nombreBarrios->iniciarCursor();
-                    this->barriosArchivo->iniciarCursor();
+                    barriosArchivo->iniciarCursor();
 
-                    while(this->barriosArchivo->avanzarCursor() && this->nombreBarrios->avanzarCursor()) {
+                    while(barriosArchivo->avanzarCursor() && this->nombreBarrios->avanzarCursor()) {
 
                         if (this->nombreBarrios->obtenerCursor() == nombreBarrio) {
 
-                            this->barrio = this->barriosArchivo->obtenerCursor();
+                            barrio = barriosArchivo->obtenerCursor();
                             barrioEncontrado = true;
 
                         }
@@ -221,7 +211,7 @@ void Menu::mostrarMenu() {
 
                     if (!barrioEncontrado) {
 
-                        std::cout << "El barrio " << nombreBarrio <<" no existe, por favor ingrese otro";
+                        std::cout << "El barrio " << nombreBarrio << " no existe, por favor ingrese otro";
 
                     }
 
@@ -237,19 +227,19 @@ void Menu::mostrarMenu() {
                 int colectivo;
                 std::cin >> colectivo;
 
-                this->barriosArchivo->iniciarCursor();
+                barriosArchivo->iniciarCursor();
 
-                this->paradas = this->asistente->obtenerParadasOrdenadasPorDistancia(this->barrio, colectivo, lat, lon);
+                paradas = this->asistente->obtenerParadasOrdenadasPorDistancia(barrio, colectivo, lat, lon);
                 
-                this->paradas->iniciarCursor();
+                paradas->iniciarCursor();
 
-                if (this->paradas->avanzarCursor()) {
+                if (paradas->avanzarCursor()) {
 
-                    std::cout << std::endl << this->paradas->obtenerCursor()->obtenerDireccion() << ", a " << sqrt(pow(this->paradas->obtenerCursor()->obtenerLatitud() - lat, 2) + pow(this->paradas->obtenerCursor()->obtenerLongitud() - lon, 2)) << " grados de distancia" << std::endl;;
+                    std::cout << std::endl << paradas->obtenerCursor()->obtenerDireccion() << ", a " << sqrt(pow(paradas->obtenerCursor()->obtenerLatitud() - lat, 2) + pow(paradas->obtenerCursor()->obtenerLongitud() - lon, 2)) << " grados de distancia" << std::endl;;
 
-                    while (this->paradas->avanzarCursor()) {
+                    while (paradas->avanzarCursor()) {
                  
-                        std::cout << std::endl << this->paradas->obtenerCursor()->obtenerDireccion() << ", a " << sqrt(pow(this->paradas->obtenerCursor()->obtenerLatitud() - lat, 2) + pow(this->paradas->obtenerCursor()->obtenerLongitud() - lon, 2)) << " grados de distancia" << std::endl;;
+                        std::cout << std::endl << paradas->obtenerCursor()->obtenerDireccion() << ", a " << sqrt(pow(paradas->obtenerCursor()->obtenerLatitud() - lat, 2) + pow(paradas->obtenerCursor()->obtenerLongitud() - lon, 2)) << " grados de distancia" << std::endl;;
 
                     }
                 
@@ -260,6 +250,9 @@ void Menu::mostrarMenu() {
                 }
 
                 std::cout << std::endl << std::endl;
+
+                delete barrio;
+                delete paradas;
 
                 break;
 

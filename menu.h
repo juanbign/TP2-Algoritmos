@@ -7,13 +7,8 @@ class Menu {
 
     private:
 
-        Asistente* asistente;
         Lista<Barrio*>* barriosArchivo;
-        Parada* parada;
-        Barrio* barrio;
-        Lista<Parada*>* paradas;
-        Lista<Barrio*>* barrios;
-        Lista<int>* cantidadParadas;
+        Asistente* asistente;
         Lista<std::string>* nombreBarrios;
 
     public:
