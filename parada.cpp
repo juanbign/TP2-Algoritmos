@@ -3,13 +3,13 @@
 #include <string>
 #include <stdexcept>
 
-using namespace std;
 
-Parada::Parada(string direccion, int colectivo, double lat, double lon) {
+
+Parada::Parada(std::string direccion, int colectivo, long double lat, long double lon) {
 
     if (colectivo < 1) {
 
-        throw invalid_argument("El numero del colectivo debe ser mayor o igual a 1");
+        throw std::invalid_argument("El numero del colectivo debe ser mayor o igual a 1");
 
     } else {
 
@@ -31,7 +31,7 @@ Parada::Parada() {
 
 }
 
-string Parada::obtenerDireccion() {
+std::string Parada::obtenerDireccion() {
 
     return this->direccion;
 
@@ -43,19 +43,19 @@ int Parada::obtenerColectivo() {
     
 }
 
-double Parada::obtenerLatitud() {
+long double Parada::obtenerLatitud() {
 
     return this->lat;
     
 }
 
-double Parada::obtenerLongitud() {
+long double Parada::obtenerLongitud() {
 
     return this->lon;
     
 }
 
-void Parada::cambiarDireccion(string direccion) {
+void Parada::cambiarDireccion(std::string direccion) {
 
     this->direccion = direccion;
     
@@ -65,4 +65,16 @@ void Parada::cambiarColectivo(int colectivo) {
 
     this->colectivo = colectivo;
     
+}
+
+void Parada::cambarLatitud(long double lat) {
+
+    this->lat = lat;
+
+}
+
+void Parada::cambiarLongitud(long double lon) {
+
+    this->lon = lon;
+
 }

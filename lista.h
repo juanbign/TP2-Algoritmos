@@ -133,7 +133,6 @@ template <typename T> int Lista<T>::getTamanio() {
 
 template <typename T> void Lista<T>::agregar(T elemento) {
 	this->agregar(elemento, this->getTamanio() + 1);
-	std::cout << "a"; 
 }
 
 template <typename T> void Lista<T>::agregarAlInicio(T elemento) {
@@ -142,12 +141,12 @@ template <typename T> void Lista<T>::agregarAlInicio(T elemento) {
 
 template <typename T> void Lista<T>::agregar(T elemento, int posicion) {
 	validarPosicion(posicion);
-    Nodo<T> * nuevo = new Nodo<T>(elemento);
+    Nodo<T>* nuevo = new Nodo<T>(elemento);
     if (posicion == 1) {
-    	nuevo->setSiguiente( this->primero);
+    	nuevo->setSiguiente(this->primero);
     	this->primero = nuevo;
     } else {
-    	Nodo<T> * anterior = this->obtenerNodo(posicion -1);
+    	Nodo<T> * anterior = this->obtenerNodo(posicion - 1);
     	nuevo->setSiguiente( anterior->getSiguiente());
     	anterior->setSiguiente( nuevo );
     }

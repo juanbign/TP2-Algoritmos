@@ -9,71 +9,32 @@ class Barrio {
     
     private:
 
-        Lista<Parada>* paradas;
+        Lista<Parada*>* paradas;
         std::string nombre;
 
     public:
 
-        Barrio(std::string nombre) {
+        Barrio(std::string nombre);
 
-            this->nombre = nombre;
-            this->paradas = new Lista<Parada>;   
+        Barrio();
 
-        }
+        virtual ~Barrio();
 
-        Barrio() {
+        std::string obtenerNombre();
 
-            this->nombre = "";
-            this->paradas = new Lista<Parada>;
-        }
+        void cambiarNombre(std::string nombre);
 
-        virtual ~Barrio() {
+        Parada* obtenerParada(int posicion);
 
-            delete this->paradas;
+        void agregarParada(Parada* dato);
 
-        }
+        int contarParadas();
 
-        std::string obtenerNombre() {
+        bool estaVacio();
 
-            return this->nombre;
-
-        }
-
-        Parada obtenerParada(int posicion) {
-
-            return this->paradas->obtener(posicion);
-
-        }
-
-        void agregarParada(Parada dato) {
-
-            this->paradas->agregar(dato, this->paradas->getTamanio() + 1);
-
-        }
-
-        int contarParadas() {
-
-            return this->paradas->getTamanio();
-
-        }
-
-        bool estaVacio() {
-
-            return this->paradas->estaVacia();
-
-        }
-
-        void asignarParada(Parada dato, int posicion) {
-
-            this->paradas->cambiar(dato, posicion);
-
-        }
+        void asignarParada(Parada* dato, int posicion);
         
-        void removerParada(int posicion) {
-
-            this->paradas->remover(posicion);
-
-        }
+        void removerParada(int posicion);
 
 };
 

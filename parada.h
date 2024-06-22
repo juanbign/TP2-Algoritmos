@@ -8,21 +8,21 @@ private:
 
     std::string direccion;
     int colectivo;
-    double lat;
-    double lon;
+    long double lat;
+    long double lon;
 
 public:
 
-    Parada(std::string direccion, int colectivo, double lat, double lon);
+    Parada(std::string direccion, int colectivo, long double lat, long double lon);
     Parada();
     std::string obtenerDireccion();
     int obtenerColectivo();
-    double obtenerLatitud();
-    double obtenerLongitud();
+    long double obtenerLatitud();
+    long double obtenerLongitud();
     void cambiarDireccion(std::string direccion);
     void cambiarColectivo(int colectivo);
-    void cambarLatitud();
-    void cambiarLongitud();
+    void cambarLatitud(long double lat);
+    void cambiarLongitud(long double lon);
 
 };
 
