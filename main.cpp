@@ -16,4 +16,6 @@ int main (int argc, char** argv) {
     delete menu;
     delete barriosArchivo;
 
+    return 0;
+
 }

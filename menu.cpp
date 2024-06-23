@@ -22,16 +22,13 @@ Menu::Menu(Lista<Barrio*>* barriosArchivo) {
 
         nombreBarrioTemp = this->barriosArchivo->obtenerCursor()->obtenerNombre();
 
-        if (nombreBarrioTemp == "") {
+        if (nombreBarrioTemp != "") {
 
-            continue;
+            this->nombreBarrios->agregar(nombreBarrioTemp);
 
         }
 
-        this->nombreBarrios->agregar(nombreBarrioTemp);
-
     }
-
 
 }
 
@@ -77,7 +74,6 @@ void Menu::mostrarMenu() {
             case '1': 
                 
                 cantidadParadas = this->asistente->obtenerCantidadParadasPorBarrio(barriosArchivo);
-
                 this->nombreBarrios->iniciarCursor();
                 cantidadParadas->iniciarCursor();
 

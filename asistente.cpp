@@ -14,7 +14,7 @@ Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) 
     barrios->iniciarCursor();
 
     while (barrios->avanzarCursor()) {
-        
+
         cantidadParadasPorBarrio->agregar(barrios->obtenerCursor()->contarParadas());
 
     }

@@ -85,6 +85,18 @@ Lista<Barrio*>* leerArchivo(std::string archivo) {
 
 		campos[contCampo] = campoActual;
 
+		if (campos[6] == "") {
+
+			if (campos[8] == "") {
+
+				break;
+
+			}
+
+			campos[6] = campos[8];
+
+		}
+
 		barriosAgregados->iniciarCursor();
 
 		for (int i = 0; barriosAgregados->avanzarCursor(); i++) {
