@@ -7,13 +7,13 @@
 
 static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
-const int Asistente::obtenerMaximoNumLineaColectivo() {
+const int obtenerMaximoNumLineaColectivo() {
 
     return MAXIMO_NUM_LINEA_COLECTIVO;
 
 } 
 
-Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) {
+Lista<int>* obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) {
 
     Lista<int>* cantidadParadasPorBarrio = new Lista<int>;
 
@@ -31,7 +31,7 @@ Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) 
 
 }
 
-Lista<Parada*>* Asistente::obtenerParadasDeColectivo(Lista<Barrio*>* barrios, int colectivo) {
+Lista<Parada*>* obtenerParadasDeColectivo(Lista<Barrio*>* barrios, int colectivo) {
 		
     Lista<Parada*>* paradasPorLinea = new Lista<Parada*>;
     barrios->iniciarCursor();
@@ -61,7 +61,7 @@ Lista<Parada*>* Asistente::obtenerParadasDeColectivo(Lista<Barrio*>* barrios, in
 
 }
 
-Lista<int>* Asistente::obtenerCantidadParadasPorColectivo(Lista<Barrio*>* barrios) {
+Lista<int>* obtenerCantidadParadasPorColectivo(Lista<Barrio*>* barrios) {
 
     Lista<int>* colectivos = new Lista<int>;
 
@@ -82,7 +82,7 @@ Lista<int>* Asistente::obtenerCantidadParadasPorColectivo(Lista<Barrio*>* barrio
 * pre: 
 * post: Devuelve la parada más cercana a una coordenada  
 */
-Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double lat, long double lon) {
+Parada* obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double lat, long double lon) {
 
     // Numero máximo del tipo "long double"
     long double minDistancia = std::numeric_limits<long double>::max();
@@ -133,7 +133,7 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
     
 }
 
-Lista<Parada*>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio* barrio, int colectivo, long double lat, long double lon) {
+Lista<Parada*>* obtenerParadasOrdenadasPorDistancia(Barrio* barrio, int colectivo, long double lat, long double lon) {
 
     Lista<Parada*>* listaParadas = new Lista<Parada*>;
     Parada* parada;

@@ -22,7 +22,7 @@ public:
 
 	/**
 	 * pre:
-	 * pos: elimina la memoria de la lista, no de los datos
+	 * pos: elimina la memoria de la lista y los datos
 	 */
 	virtual ~Lista();
 

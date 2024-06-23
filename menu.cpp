@@ -8,21 +8,20 @@
 #include <string>
 #include <cmath>
 
-Menu::Menu(Lista<Barrio*>* barriosArchivo) {
+Menu::Menu(Lista<Barrio*>* barrios) {
 
     this->nombreBarrios = new Lista<std::string>;
-    this->barriosArchivo = barriosArchivo;
-    this->asistente = new Asistente();
+    this->barrios = barrios;
 
-    this->barriosArchivo->iniciarCursor();
+    this->barrios->iniciarCursor();
 
     std::string nombreBarrioTemp;
 
-    // Recorro los barrios del archivo
-    while (this->barriosArchivo->avanzarCursor()) {
+    // Recorro los barrios pasados por parámetro
+    while (this->barrios->avanzarCursor()) {
 
         // Agrego sus nombres a la lista
-        this->nombreBarrios->agregar(this->barriosArchivo->obtenerCursor()->obtenerNombre());
+        this->nombreBarrios->agregar(this->barrios->obtenerCursor()->obtenerNombre());
 
     }
 
@@ -30,7 +29,6 @@ Menu::Menu(Lista<Barrio*>* barriosArchivo) {
 
 Menu::~Menu() {
 
-    delete this->asistente;
     delete this->nombreBarrios;
 
 }
@@ -48,7 +46,7 @@ void Menu::mostrarMenu() {
     long double lat;
     long double lon;
 
-    // ¿Se encontró el barrio en la lista de barrios del archivo?
+    // ¿Se encontró el barrio en la lista de barrios?
     bool barrioEncontrado;
 
     // Nombre del barrio que ingresa el usuario
@@ -86,7 +84,7 @@ void Menu::mostrarMenu() {
             case '1': 
                 
                 // Obtengo la cantidad de paradas por barro
-                cantidadParadas = this->asistente->obtenerCantidadParadasPorBarrio(barriosArchivo);
+                cantidadParadas = obtenerCantidadParadasPorBarrio(barrios);
                 this->nombreBarrios->iniciarCursor();
                 cantidadParadas->iniciarCursor();
 
@@ -133,7 +131,7 @@ void Menu::mostrarMenu() {
                 std::cin >> lon;
 
                 // Obtengo la parada más cercanas a las coordenadas ingresadas (en grados)
-                parada = this->asistente->obtenerParadaMasCercana(barriosArchivo, lat, lon);
+                parada = obtenerParadaMasCercana(barrios, lat, lon);
 
                 // Si la dirección es igual a "NULL", signifca que no hay paradas
                 if (parada->obtenerDireccion() == "NULL") {
@@ -156,11 +154,11 @@ void Menu::mostrarMenu() {
             // Mostrar listado de paradas de un colectivo
             case '3':
             
-                std::cout << "Ingrese numero del colectivo (entre 1 y " << this->asistente->obtenerMaximoNumLineaColectivo() << "): ";
+                std::cout << "Ingrese numero del colectivo (entre 1 y " << obtenerMaximoNumLineaColectivo() << "): ";
                 std::cin >> colectivo;
 
                 // Obtengo las paradas del colectivo elegido
-                paradas = this->asistente->obtenerParadasDeColectivo(barriosArchivo, colectivo);
+                paradas = obtenerParadasDeColectivo(barrios, colectivo);
 
                 paradas->iniciarCursor();
 
@@ -193,7 +191,7 @@ void Menu::mostrarMenu() {
             case '4':
 
                 // Obtengo la cantidad de paradas por colectivo
-                cantidadParadas = this->asistente->obtenerCantidadParadasPorColectivo(barriosArchivo);
+                cantidadParadas = obtenerCantidadParadasPorColectivo(barrios);
 
                 cantidadParadas->iniciarCursor();
 
@@ -266,15 +264,15 @@ void Menu::mostrarMenu() {
                     std::getline(std::cin, nombreBarrio);
 
                     this->nombreBarrios->iniciarCursor();
-                    barriosArchivo->iniciarCursor();
+                    barrios->iniciarCursor();
 
                     // Recorro con ambos cursores
-                    while(barriosArchivo->avanzarCursor() && this->nombreBarrios->avanzarCursor()) {
+                    while(barrios->avanzarCursor() && this->nombreBarrios->avanzarCursor()) {
 
                         // Si se encuentra el barrio
                         if (this->nombreBarrios->obtenerCursor() == nombreBarrio) {
 
-                            barrio = barriosArchivo->obtenerCursor();
+                            barrio = barrios->obtenerCursor();
                             barrioEncontrado = true;
                             break;
 
@@ -299,14 +297,14 @@ void Menu::mostrarMenu() {
                 std::cin >> lat;
                 std::cout << std::endl << "Ingrese longitud (escrita como 1.23 o -1.23): ";
                 std::cin >> lon;
-                std::cout << std::endl << "Ingrese numero del colectivo (entre 1 y " << this->asistente->obtenerMaximoNumLineaColectivo() << "): ";
+                std::cout << std::endl << "Ingrese numero del colectivo (entre 1 y " << obtenerMaximoNumLineaColectivo() << "): ";
                 int colectivo;
                 std::cin >> colectivo;
 
-                barriosArchivo->iniciarCursor();
+                barrios->iniciarCursor();
 
                 // Obtengo las paradas ordenadas por distancia
-                paradas = this->asistente->obtenerParadasOrdenadasPorDistancia(barrio, colectivo, lat, lon);
+                paradas = obtenerParadasOrdenadasPorDistancia(barrio, colectivo, lat, lon);
                 
                 paradas->iniciarCursor();
 

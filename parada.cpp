@@ -25,7 +25,7 @@ Parada::Parada(std::string direccion, int colectivo, long double lat, long doubl
 Parada::Parada() {
 
     this->direccion = "";
-    this->colectivo = 1;
+    this->colectivo = 0;
     this->lat = 0;
     this->lon = 0;
 

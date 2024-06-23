@@ -1,25 +1,31 @@
+#ifndef MENU_H_
+#define MENU_H_
+
 #include "lista.h"
 #include "barrio.h"
-#include "asistente.h"
 #include "parada.h"
 
 class Menu {
 
     private:
-
-        Lista<Barrio*>* barriosArchivo;
-        Asistente* asistente;
+        
+        /**
+        * pre: 
+        * post: Devuelve un barrio sin paradas y el nombre especificado
+        */
+        Lista<Barrio*>* barrios;
         Lista<std::string>* nombreBarrios;
 
     public:
 
         /**
-        * pre: Guardar todos los barrios del archivo en el parámetro
+        * pre:
         * post: Crea una lista de los nombres de los barrios
         */
-        Menu(Lista<Barrio*>* barriosArchivo);
+        Menu(Lista<Barrio*>* barrios);
 
         virtual ~Menu();
+        
         /**
         * pre: 
         * post: Muestra el menú y pide una entrada. Termina su ejecución cuando el usuario indica que quiere salir.
@@ -27,3 +33,5 @@ class Menu {
         void mostrarMenu();
 
 };
+
+#endif /* MENU_H_ */

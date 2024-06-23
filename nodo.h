@@ -10,18 +10,13 @@ private:
 	Nodo<T> * siguiente;
 
 public:
+	
 	/**
 	 * pre: -
 	 * pos: el Nodo resulta inicializado con el dato dado
      *       y sin un Nodo siguiente.
 	 */
 	Nodo(T dato);
-
-	/**
-	 * pre:
-	 * pos: elimina la memoria
-	 */
-	virtual ~Nodo(); //no hago delete
 
 	/**
 	 * pre:
@@ -52,8 +47,6 @@ template <typename T> Nodo<T>::Nodo(T dato) {
 	this->dato = dato;
 	this->siguiente = NULL;
 }
-
-template <typename T> Nodo<T>::~Nodo() {}
 
 
 template <typename T> T Nodo<T>::getDato() {
