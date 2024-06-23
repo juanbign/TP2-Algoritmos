@@ -7,6 +7,12 @@
 
 static const int MAXIMO_NUM_LINEA_COLECTIVO = 195;
 
+const int Asistente::obtenerMaximoNumLineaColectivo() {
+
+    return MAXIMO_NUM_LINEA_COLECTIVO;
+
+} 
+
 Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) {
 
     Lista<int>* cantidadParadasPorBarrio = new Lista<int>;
@@ -15,6 +21,7 @@ Lista<int>* Asistente::obtenerCantidadParadasPorBarrio(Lista<Barrio*>* barrios) 
 
     while (barrios->avanzarCursor()) {
 
+        // Agrego el conteo de paradas a la lista
         cantidadParadasPorBarrio->agregar(barrios->obtenerCursor()->contarParadas());
 
     }
@@ -35,7 +42,8 @@ Lista<Parada*>* Asistente::obtenerParadasDeColectivo(Lista<Barrio*>* barrios, in
 
         barrio = barrios->obtenerCursor();
 
-        for (int j = 1; j < barrio->contarParadas(); j++) {
+        // Voy por cada índice de parada
+        for (int j = 1; j < barrio->contarParadas() + 1; j++) {
 
             // Si el colectivo es igual al pasado por parámetro
             if (barrio->obtenerParada(j)->obtenerColectivo() == colectivo) { 
@@ -81,6 +89,8 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
     long double nuevaDistancia;
     Parada* minParada;
     Parada* nuevaParada;
+
+    bool paradaEncontrada = false;
     
     barrios->iniciarCursor();
 
@@ -90,6 +100,7 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
 
         barrio = barrios->obtenerCursor();
 
+        // Voy por cada índice de parada
         for (int j = 1; j < barrio->contarParadas() + 1; j++) {
 
             nuevaParada = barrio->obtenerParada(j);
@@ -97,17 +108,24 @@ Parada* Asistente::obtenerParadaMasCercana(Lista<Barrio*>* barrios, long double 
             // Obtengo la distancia con pitágoras 
             nuevaDistancia = sqrt(pow(nuevaParada->obtenerLatitud() - lat, 2) + pow(nuevaParada->obtenerLongitud() - lon, 2));
             
-
             // Si la nueva distancia es menor a la mínima
             if (nuevaDistancia < minDistancia) {
 
                 // Igualo al nuevo mínimo
                 minDistancia = nuevaDistancia;
                 minParada = nuevaParada;
+                paradaEncontrada = true;
 
             }
 
         }
+
+    }
+
+    // Si no se encuentra ni una parada, creo una de error
+    if (!paradaEncontrada) {
+
+        minParada = new Parada("NULL", 1, 0, 0);
 
     }
 
@@ -120,6 +138,7 @@ Lista<Parada*>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio* barrio, i
     Lista<Parada*>* listaParadas = new Lista<Parada*>;
     Parada* parada;
 
+    // Voy por cada índice de parada
     for (int i = 1; i < barrio->contarParadas() + 1; i++) {
 
         parada = barrio->obtenerParada(i);
@@ -138,7 +157,8 @@ Lista<Parada*>* Asistente::obtenerParadasOrdenadasPorDistancia(Barrio* barrio, i
 
     listaParadas->iniciarCursor();
     
-    for (int i = 0; i < listaParadas->getTamanio(); i++) {
+    // Recorro la lista con las paradas obtenidas usando un índice
+    for (int i = 0; listaParadas->avanzarCursor(); i++) {
         
         listaParadas->avanzarCursor();
 
